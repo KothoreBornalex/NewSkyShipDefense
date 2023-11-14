@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static IStatistics;
 
 public class playerAttack : MonoBehaviour
 {
@@ -88,32 +89,33 @@ public class playerAttack : MonoBehaviour
     private void UseSpell1(Vector3 attackOrigin, int damageValue, float radius)     // Faible dégats de zone
     {
         GameObject att = Instantiate(_spell1Prefab, attackOrigin, Quaternion.identity);
-        Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, _ennemyLayerMask);
+        Collider[] hitCollider = Physics.OverlapSphere(att.transform.position, radius, _ennemyLayerMask);
         DamageSpell(hitCollider, damageValue);
     }
     private void UseSpell2(Vector3 attackOrigin, int damageValue, float radius)     // Fort dégats précis
     {
         GameObject att = Instantiate(_spell2Prefab, attackOrigin, Quaternion.identity);
-        Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, _ennemyLayerMask);
+        Collider[] hitCollider = Physics.OverlapSphere(att.transform.position, radius, _ennemyLayerMask);
         DamageSpell(hitCollider, damageValue);
     }
     private void UseSpell3(Vector3 attackOrigin, int slowValue, float radius)       // Freeze
     {
         GameObject att = Instantiate(_spell3Prefab, attackOrigin, Quaternion.identity);
-        Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, _ennemyLayerMask);
+        Collider[] hitCollider = Physics.OverlapSphere(att.transform.position, radius, _ennemyLayerMask);
         SlowSpell(hitCollider, slowValue);
     }
 
     private void DamageSpell(Collider[] colliders, int damageValue)
     {
+        if (colliders.Length != 0) Debug.Log("Enemy Detected");
+
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Ennemy"))
-            {
-                // !!!!! Retirer la vie des ennemis
-            }
+            // !!!!! Retirer la vie des ennemis
+            collider.GetComponent<IStatistics>().DecreaseStat(StatName.Health, damageValue);
         }
     }
+
     private void SlowSpell(Collider[] colliders, int slowValue)
     {
         foreach(Collider collider in colliders)

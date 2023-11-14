@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 7739295692774149735}
   - component: {fileID: 4225649568417930775}
   - component: {fileID: 3579194154621912447}
-  m_Layer: 7
+  m_Layer: 30
   m_Name: ELF_Larbin_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
