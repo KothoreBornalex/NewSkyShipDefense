@@ -35,6 +35,20 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private Transform[] _backgroundElements;
 
+
+    [Header("Ship Fields")]
+    [SerializeField, Range(0, 20)] private float _shipSpeed;
+    [SerializeField] private Transform _leftShip;
+    private Transform _baseLeftShip;
+    [SerializeField] private Transform _rightShip;
+    private Transform _baseRightShip;
+
+
+
+
+
+
+
     private void Awake()
     {
         if(instance == null)
@@ -50,7 +64,13 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-       // _directionalLight = _directionalLightTransform.GetComponent<Light>();
+        // _directionalLight = _directionalLightTransform.GetComponent<Light>();
+
+        _baseLeftShip = Instantiate<GameObject>(new GameObject(), transform).transform;
+        _baseLeftShip.SetPositionAndRotation(_leftShip.position, _leftShip.rotation);
+        _baseRightShip = Instantiate<GameObject>(new GameObject(), transform).transform;
+        _baseRightShip.SetPositionAndRotation(_rightShip.position, _rightShip.rotation);
+
     }
 
     // Update is called once per frame
@@ -106,5 +126,11 @@ public class MapManager : MonoBehaviour
         {
             t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y, (_backgroundBoundingBox.z / 2));
         }
+    }
+
+
+    void MovingShipFunction()
+    {
+
     }
 }

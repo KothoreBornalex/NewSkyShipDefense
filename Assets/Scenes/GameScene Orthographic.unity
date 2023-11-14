@@ -1763,6 +1763,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeSpell1Level
       objectReference: {fileID: 0}
+    - target: {fileID: 5189047094632746649, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 86705896}
+    - target: {fileID: 5189047094632746649, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189047094632746649, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5669866548566931702, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2555,6 +2567,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 563192435}
   - {fileID: 1101632540}
   - {fileID: 1615564497}
   - {fileID: 419722119}
@@ -2600,6 +2613,9 @@ MonoBehaviour:
   - {fileID: 50722386}
   - {fileID: 131486895}
   - {fileID: 2106847545}
+  _shipSpeed: 0
+  _leftShip: {fileID: 1615564497}
+  _rightShip: {fileID: 419722119}
 --- !u!1001 &369492181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3452,6 +3468,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1327069753}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &563192434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 563192435}
+  m_Layer: 0
+  m_Name: LeftShipPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &563192435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563192434}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.07152675, z: -0, w: 0.99743867}
+  m_LocalPosition: {x: -13.48, y: 6.510002, z: -21.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 365031287}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &608395502
 PrefabInstance:

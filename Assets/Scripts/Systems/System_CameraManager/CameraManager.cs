@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    public Transform cameraTransform; // The main camera's transform
-    public float swayAmount = 1.0f; // Adjust this value to control the intensity of the sway
-    public float swaySpeed = 1.0f; // Adjust this value to control the speed of the sway
-    public Vector2 swayDirection = new Vector2(1.0f, 1.0f); // Adjust these values to control the direction of the sway
-    public float rotationAmountX = 10.0f; // Adjust this value to control the X-axis rotation
-    public float rotationAmountY = 5.0f; // Adjust this value to control the Y-axis rotation
-    public float rotationAmountZ = 0.0f; // Adjust this value to control the Z-axis rotation
-    public float rotationSpeed = 2.0f; // Adjust this value to control the speed of the rotation
+    public Transform cameraTransform;
+    public float swayAmount = 1.0f;
+    public float swaySpeed = 1.0f; 
+    public Vector2 swayDirection = new Vector2(1.0f, 1.0f);
+    public float rotationAmountX = 10.0f;
+    public float rotationAmountY = 5.0f;
+    public float rotationAmountZ = 0.0f;
+    public float rotationSpeed = 2.0f;
 
     private Vector3 initialCameraPosition;
     private Quaternion initialCameraRotation;
@@ -39,7 +39,6 @@ public class CameraManager : MonoBehaviour
         float yRotation = Mathf.PerlinNoise(0, timeCounter) * 2.0f - 1.0f;
         float zRotation = Mathf.PerlinNoise(timeCounter * 2, timeCounter * 2) * 2.0f - 1.0f;
 
-        // Apply the sway and rotation to the camera's local position and rotation
         Vector3 sway = new Vector3(xOffset, yOffset, 0) * swayAmount;
         Quaternion rotation = Quaternion.Euler(xRotation * (rotationAmountX * Mathf.Cos(Time.time)), yRotation * (rotationAmountY * Mathf.Cos(Time.time)), zRotation * (rotationAmountZ * Mathf.Cos(Time.time))) * initialCameraRotation;
 
