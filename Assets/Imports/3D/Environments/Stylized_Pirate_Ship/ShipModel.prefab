@@ -4570,7 +4570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9036149285931199850}
   m_Layer: 0
-  m_Name: StylShip_Unity
+  m_Name: ShipModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

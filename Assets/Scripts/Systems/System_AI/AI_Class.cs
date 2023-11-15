@@ -237,7 +237,7 @@ public class AI_Class : MonoBehaviour, IStatistics
     #region Global Attacks Functions
     public void HandleAIAttack()
     {
-        Debug.Log("AI Attack !!");
+        //Debug.Log("AI Attack !!");
 
         if (_attackTimer >= _weaponsList.WeaponsList[_currentWeaponIndex].weaponCoolDown)
         {
