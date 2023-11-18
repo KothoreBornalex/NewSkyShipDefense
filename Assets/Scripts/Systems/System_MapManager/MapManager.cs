@@ -37,7 +37,7 @@ public class MapManager : MonoBehaviour
 
 
     [Header("Ship Fields")]
-    [SerializeField, Range(0, 20)] private float _shipMovingSpeed;
+    [SerializeField, Range(0, 60)] private float _shipMovingSpeed;
     [SerializeField, Range(0, 20)] private float _shipRotatingSpeed;
 
     [SerializeField] private ShipPatrolStruct[] _shipsArray;
@@ -47,10 +47,14 @@ public class MapManager : MonoBehaviour
     public struct ShipPatrolStruct
     {
         public Transform _shipTransform;
-        [HideInInspector] public Transform _baseShipTransform;
-        public bool _endPatrol;
+        public bool _finishedPatrol;
+        public bool _startPatrol;
         public int _currentPatrolPoint;
-        public Transform[] _patrolPoints;
+
+        [HideInInspector] public Transform _baseShipPoint;
+        public Transform[] _startAnimationPoints;
+        public Transform[] _endAnimationPoints;
+
     }
 
 
@@ -75,8 +79,8 @@ public class MapManager : MonoBehaviour
 
         for(int i = 0; i < _shipsArray.Length; i++)
         {
-            _shipsArray[i]._baseShipTransform = Instantiate<GameObject>(new GameObject(), transform).transform;
-            _shipsArray[i]._baseShipTransform.SetPositionAndRotation(_shipsArray[i]._shipTransform.position, _shipsArray[i]._shipTransform.rotation);
+            _shipsArray[i]._baseShipPoint = Instantiate<GameObject>(new GameObject(), transform).transform;
+            _shipsArray[i]._baseShipPoint.SetPositionAndRotation(_shipsArray[i]._shipTransform.position, _shipsArray[i]._shipTransform.rotation);
         }
 
     }
@@ -85,23 +89,27 @@ public class MapManager : MonoBehaviour
     void Update()
     {
 
-        UpdatingShipFunction();
-
-
-
-
         if (_isTimeSpeeding)
         {
-            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
+            if (AllShipsPatrolTurnEnded())
+            {
+                _isTimeSpeeding = false;
+                ResetAllShips();
+            }
+            else
+            {
+                UpdatingShipFunction();
+            }
 
+            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
             _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _fastBackGroundMovingSpeed, Time.deltaTime * 0.7f);
         }
         else
         {
             _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _slowTimeSpeed, Time.deltaTime * 5.0F);
-
             _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _slowBackGroundMovingSpeed, Time.deltaTime * 0.7f);
         }
+
         _currentDeltaTime = Time.deltaTime * _currentTimeSpeed;
 
 
@@ -141,42 +149,81 @@ public class MapManager : MonoBehaviour
 
     void UpdatingShipFunction()
     {
+
         for (int i = 0; i < _shipsArray.Length; i++)
         {
 
-            if (_shipsArray[i]._patrolPoints.Length != 0)
+            if (!_shipsArray[i]._finishedPatrol)
             {
-                Vector3 targetPosition = _shipsArray[i]._patrolPoints[_shipsArray[i]._currentPatrolPoint].transform.position;
-                Vector3 targetPositionRounded = new Vector3(Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y), Mathf.Round(targetPosition.z));
-
-                Vector3 shipPosition = _shipsArray[i]._shipTransform.position;
-                Vector3 shipPositionRounded = new Vector3(Mathf.Round(shipPosition.x), Mathf.Round(shipPosition.y), Mathf.Round(shipPosition.z));
-
-                if (targetPositionRounded == shipPositionRounded)
+                if (_shipsArray[i]._startAnimationPoints.Length != 0 && _shipsArray[i]._startPatrol)
                 {
-                    if(_shipsArray[i]._currentPatrolPoint == _shipsArray[i]._patrolPoints.Length - 1)
+
+                    Vector3 targetPosition = _shipsArray[i]._startAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform.position;
+                    Vector3 targetPositionRounded = new Vector3(Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y), Mathf.Round(targetPosition.z));
+
+                    Vector3 shipPosition = _shipsArray[i]._shipTransform.position;
+                    Vector3 shipPositionRounded = new Vector3(Mathf.Round(shipPosition.x), Mathf.Round(shipPosition.y), Mathf.Round(shipPosition.z));
+
+
+                    if (targetPositionRounded == shipPositionRounded)
                     {
-                        _shipsArray[i]._endPatrol = true;
+                        if (_shipsArray[i]._currentPatrolPoint == _shipsArray[i]._startAnimationPoints.Length - 1)
+                        {
+                            _shipsArray[i]._startPatrol = false;
+                            _shipsArray[i]._currentPatrolPoint = 0;
+                            _shipsArray[i]._shipTransform.SetPositionAndRotation(_shipsArray[i]._endAnimationPoints[0].position, _shipsArray[i]._endAnimationPoints[0].rotation);
+                        }
+                        else
+                        {
+                            _shipsArray[i]._currentPatrolPoint++;
+                        }
+
                     }
-                    else
+
+                    TranslateShipTransform(_shipsArray[i]._shipTransform, _shipsArray[i]._startAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform);
+
+                }
+
+
+                if (_shipsArray[i]._endAnimationPoints.Length != 0 && !_shipsArray[i]._startPatrol)
+                {
+
+                    Vector3 targetPosition = _shipsArray[i]._endAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform.position;
+                    Vector3 targetPositionRounded = new Vector3(Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y), Mathf.Round(targetPosition.z));
+
+                    Vector3 shipPosition = _shipsArray[i]._shipTransform.position;
+                    Vector3 shipPositionRounded = new Vector3(Mathf.Round(shipPosition.x), Mathf.Round(shipPosition.y), Mathf.Round(shipPosition.z));
+
+
+                    if (targetPositionRounded == shipPositionRounded)
                     {
-                        _shipsArray[i]._currentPatrolPoint++;
+                        if (_shipsArray[i]._currentPatrolPoint == _shipsArray[i]._endAnimationPoints.Length - 1)
+                        {
+                            _shipsArray[i]._finishedPatrol = true;
+                        }
+                        else
+                        {
+                            _shipsArray[i]._currentPatrolPoint++;
+                        }
                     }
 
+                    EndPatrol(_shipsArray[i]._shipTransform, _shipsArray[i]._endAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform);
                 }
-
-                if (_shipsArray[i]._endPatrol)
-                {
-                    EndPatrol(_shipsArray[i]._shipTransform, _shipsArray[i]._patrolPoints[_shipsArray[i]._currentPatrolPoint].transform.position);
-                }
-                else
-                {
-                    TranslateShipTransform(_shipsArray[i]._shipTransform, _shipsArray[i]._patrolPoints[_shipsArray[i]._currentPatrolPoint].transform);
-                }
-
             }
+            
         }
     }
+
+    void ResetAllShips()
+    {
+        for(int i = 0; i < _shipsArray.Length; i++)
+        {
+            _shipsArray[i]._finishedPatrol = false;
+            _shipsArray[i]._currentPatrolPoint = 0;
+            _shipsArray[i]._startPatrol = true;
+        }
+    }
+
 
     public void TranslateShipTransform(Transform ship, Transform target)
     {
@@ -187,20 +234,32 @@ public class MapManager : MonoBehaviour
         
         ship.rotation = Quaternion.Lerp(ship.rotation, newRotation, Time.deltaTime * _shipRotatingSpeed);
 
-        ship.position = Vector3.MoveTowards(ship.position, target.position, Time.deltaTime * _shipMovingSpeed);
+        ship.position = Vector3.Lerp(ship.position, target.position, Time.deltaTime * _shipMovingSpeed);
     }
 
 
-    public void EndPatrol(Transform ship, Vector3 target)
+    public void EndPatrol(Transform ship, Transform target)
     {
 
-        Vector3 relativePos = target - ship.position;
+        Vector3 relativePos = target.position - ship.position;
 
         Quaternion newRotation = Quaternion.LookRotation(relativePos, ship.up);
 
-        ship.rotation = Quaternion.Lerp(ship.rotation, newRotation, Time.deltaTime * _shipRotatingSpeed);
+        //ship.rotation = Quaternion.Lerp(ship.rotation, newRotation, Time.deltaTime * _shipRotatingSpeed);
+        ship.rotation = Quaternion.Lerp(ship.rotation, target.rotation, Time.deltaTime * _shipRotatingSpeed);
 
-        ship.position = Vector3.MoveTowards(ship.position, target, Time.deltaTime * _shipMovingSpeed);
+        ship.position = Vector3.Lerp(ship.position, target.position, Time.deltaTime);
+    }
+
+    bool AllShipsPatrolTurnEnded()
+    {
+        foreach (var ship in _shipsArray)
+        {
+            if (ship._finishedPatrol) continue;
+            else return false;
+        }
+
+        return true;
     }
 
     void OnDrawGizmos()
@@ -214,19 +273,37 @@ public class MapManager : MonoBehaviour
         for(int i = 0; i < _shipsArray.Length; i++)
         {
 
-            if (_shipsArray[i]._patrolPoints.Length != 0)
+            if (_shipsArray[i]._startAnimationPoints.Length != 0)
             {
-                for(int x = 0; x < _shipsArray[i]._patrolPoints.Length; x++)
+                for(int x = 0; x < _shipsArray[i]._startAnimationPoints.Length; x++)
                 {
-                    if (x != _shipsArray[i]._patrolPoints.Length - 1)
+                    if (x != _shipsArray[i]._startAnimationPoints.Length - 1)
                     {
-                        Gizmos.DrawSphere(_shipsArray[i]._patrolPoints[x].transform.position, 0.85f);
-                        Gizmos.DrawLine(_shipsArray[i]._patrolPoints[x].transform.position, _shipsArray[i]._patrolPoints[x + 1].transform.position);
+                        Gizmos.DrawSphere(_shipsArray[i]._startAnimationPoints[x].transform.position, 0.85f);
+                        Gizmos.DrawLine(_shipsArray[i]._startAnimationPoints[x].transform.position, _shipsArray[i]._startAnimationPoints[x + 1].transform.position);
                     }
                     else
                     {
-                        Gizmos.DrawSphere(_shipsArray[i]._patrolPoints[x].transform.position, 0.85f);
-                        Gizmos.DrawLine(_shipsArray[i]._patrolPoints[x].transform.position, _shipsArray[i]._patrolPoints[0].transform.position);
+                        Gizmos.DrawSphere(_shipsArray[i]._startAnimationPoints[x].transform.position, 0.85f);
+                        Gizmos.DrawLine(_shipsArray[i]._startAnimationPoints[x].transform.position, _shipsArray[i]._startAnimationPoints[0].transform.position);
+                    }
+                }
+            }
+
+
+            if (_shipsArray[i]._endAnimationPoints.Length != 0)
+            {
+                for (int x = 0; x < _shipsArray[i]._endAnimationPoints.Length; x++)
+                {
+                    if (x != _shipsArray[i]._endAnimationPoints.Length - 1)
+                    {
+                        Gizmos.DrawSphere(_shipsArray[i]._endAnimationPoints[x].transform.position, 0.85f);
+                        Gizmos.DrawLine(_shipsArray[i]._endAnimationPoints[x].transform.position, _shipsArray[i]._endAnimationPoints[x + 1].transform.position);
+                    }
+                    else
+                    {
+                        Gizmos.DrawSphere(_shipsArray[i]._endAnimationPoints[x].transform.position, 0.85f);
+                        //Gizmos.DrawLine(_shipsArray[i]._endAnimationPoints[x].transform.position, _shipsArray[i]._endAnimationPoints[0].transform.position);
                     }
                 }
             }
