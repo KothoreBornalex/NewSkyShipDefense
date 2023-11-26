@@ -31,6 +31,7 @@ public class AI_Class : MonoBehaviour, IStatistics
         DecreaseStat(StatName.Health, (int)UnityEngine.Random.Range(1, 3));
     }
 
+
     [Header("Global AI Fields")]
     [SerializeField] private bool _isAlive;
     [SerializeField] private SoldiersEnum _unitType;
@@ -42,6 +43,7 @@ public class AI_Class : MonoBehaviour, IStatistics
     private SkinnedMeshRenderer _skinnedMeshRenderer;
     private Material _material;
     private Animator _animator;
+    private PooledObject _pooledObject;
 
     [SerializeField] private WeaponsScriptableObject _weaponsList;
     private List<Statistics> _aiStatistics = new List<Statistics>();
@@ -60,6 +62,8 @@ public class AI_Class : MonoBehaviour, IStatistics
     [SerializeField] private Transform _bulletSpawnPoint;
     private float _attackTimer;
 
+    //Death Fields
+    private float currentTimeSinceDeath;
 
     //Animations Hash
     private int hash_Reset = Animator.StringToHash("Reset");
@@ -77,6 +81,7 @@ public class AI_Class : MonoBehaviour, IStatistics
         _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         _material = _skinnedMeshRenderer.material;
         _animator = GetComponentInChildren<Animator>();
+        _pooledObject = GetComponent<PooledObject>();
     }
 
     private void Start()
@@ -103,6 +108,16 @@ public class AI_Class : MonoBehaviour, IStatistics
             {
                 _material.color = Vector4.Lerp(_material.color, Color.black, Time.deltaTime * 3.0f);
             }
+
+
+            transform.Translate(-transform.up * Time.deltaTime * 0.3f);
+            currentTimeSinceDeath += Time.deltaTime;
+
+            if (currentTimeSinceDeath >= 3.0f)
+            {
+                AISpawner_Manager.instance.UnSpawn(_pooledObject);
+            }
+
         }
 
     }
@@ -141,11 +156,12 @@ public class AI_Class : MonoBehaviour, IStatistics
 
     public void Death()
     {
-        //Instantiate<GameObject>(_ai_Data.DeathObject, transform.position, Quaternion.identity);
+        Instantiate<GameObject>(_ai_Data.DeathObject, transform.position, Quaternion.identity);
         _isAlive = false;
         _animator.SetBool(hash_isDead, true);
         _navMeshAgent.isStopped = true;
         _navMeshAgent.ResetPath();
+        _navMeshAgent.enabled = false;
 
         _capsuleCollider.enabled = false;
 

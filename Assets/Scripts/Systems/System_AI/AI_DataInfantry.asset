@@ -16,5 +16,5 @@ MonoBehaviour:
   - _statName: 0
     _statCurrentValue: 6
     _statMaxValue: 6
-  _deathObject: {fileID: 4647684547776974414, guid: 5a933fa069df0ab47802d303cc7882ea, type: 3}
+  _deathObject: {fileID: 2264145547278940075, guid: 68dc6249797585744ac310830aac1e7e, type: 3}
   _attackRange: 2.2

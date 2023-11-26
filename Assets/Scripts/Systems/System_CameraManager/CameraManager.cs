@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public Camera cameraComponent;
     public Transform cameraTransform;
     public float swayAmount = 1.0f;
     public float swaySpeed = 1.0f; 
@@ -26,6 +27,8 @@ public class CameraManager : MonoBehaviour
 
         initialCameraPosition = cameraTransform.localPosition;
         initialCameraRotation = cameraTransform.localRotation;
+
+
     }
 
     void Update()

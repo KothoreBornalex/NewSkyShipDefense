@@ -34,7 +34,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - NoLighting
   - EnemyLayer
   - PostProcessLayer
   m_SortingLayers:

@@ -203,7 +203,7 @@ public class AISpawner_Manager : MonoBehaviour
     }
 
 
-    private void UnSpawn(PooledObject pooledObject)
+    public void UnSpawn(PooledObject pooledObject)
     {
         _factionPoolsList[pooledObject.FactionIndex]._poolsList[pooledObject.SoldierIndex]._pool.Release(pooledObject);
     }

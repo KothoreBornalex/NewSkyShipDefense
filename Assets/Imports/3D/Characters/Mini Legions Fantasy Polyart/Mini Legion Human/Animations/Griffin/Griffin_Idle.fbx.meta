@@ -1,95 +1,263 @@
 fileFormatVersion: 2
 guid: 522f002ca2a6680488f34946cab8aff0
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Chest
-    100002: Finger_L
-    100004: Finger_R
-    100006: Foot_L
-    100008: Foot_R
-    100010: //RootNode
-    100012: GriffinMesh
-    100014: Hand_L
-    100016: Hand_R
-    100018: Head
-    100020: Hips
-    100022: LowerArm_L
-    100024: LowerBeak
-    100026: LowerBeakTip
-    100028: LowerLeg_L
-    100030: Neck01
-    100032: Neck02
-    100034: RowerArm_R
-    100036: RowerReg_R
-    100038: Spine
-    100040: Tail01
-    100042: Tail02
-    100044: Tail03
-    100046: Tail04
-    100048: Toe_L
-    100050: Toe_R
-    100052: UpperArm_L
-    100054: UpperArm_R
-    100056: UpperBeak
-    100058: UpperBeakTip
-    100060: UpperLeg_L
-    100062: UpperReg_R
-    100064: Wing01_L
-    100066: Wing01_R
-    100068: Wing02_L
-    100070: Wing02_R
-    100072: Wing03_L
-    100074: Wing03_R
-    100076: Wing04_L
-    100078: Wing04_R
-    400000: Chest
-    400002: Finger_L
-    400004: Finger_R
-    400006: Foot_L
-    400008: Foot_R
-    400010: //RootNode
-    400012: GriffinMesh
-    400014: Hand_L
-    400016: Hand_R
-    400018: Head
-    400020: Hips
-    400022: LowerArm_L
-    400024: LowerBeak
-    400026: LowerBeakTip
-    400028: LowerLeg_L
-    400030: Neck01
-    400032: Neck02
-    400034: RowerArm_R
-    400036: RowerReg_R
-    400038: Spine
-    400040: Tail01
-    400042: Tail02
-    400044: Tail03
-    400046: Tail04
-    400048: Toe_L
-    400050: Toe_R
-    400052: UpperArm_L
-    400054: UpperArm_R
-    400056: UpperBeak
-    400058: UpperBeakTip
-    400060: UpperLeg_L
-    400062: UpperReg_R
-    400064: Wing01_L
-    400066: Wing01_R
-    400068: Wing02_L
-    400070: Wing02_R
-    400072: Wing03_L
-    400074: Wing03_R
-    400076: Wing04_L
-    400078: Wing04_R
-    4300000: GriffinMesh
-    7400000: Idle
-    9500000: //RootNode
-    13700000: GriffinMesh
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Chest
+  - first:
+      1: 100002
+    second: Finger_L
+  - first:
+      1: 100004
+    second: Finger_R
+  - first:
+      1: 100006
+    second: Foot_L
+  - first:
+      1: 100008
+    second: Foot_R
+  - first:
+      1: 100010
+    second: //RootNode
+  - first:
+      1: 100012
+    second: GriffinMesh
+  - first:
+      1: 100014
+    second: Hand_L
+  - first:
+      1: 100016
+    second: Hand_R
+  - first:
+      1: 100018
+    second: Head
+  - first:
+      1: 100020
+    second: Hips
+  - first:
+      1: 100022
+    second: LowerArm_L
+  - first:
+      1: 100024
+    second: LowerBeak
+  - first:
+      1: 100026
+    second: LowerBeakTip
+  - first:
+      1: 100028
+    second: LowerLeg_L
+  - first:
+      1: 100030
+    second: Neck01
+  - first:
+      1: 100032
+    second: Neck02
+  - first:
+      1: 100034
+    second: RowerArm_R
+  - first:
+      1: 100036
+    second: RowerReg_R
+  - first:
+      1: 100038
+    second: Spine
+  - first:
+      1: 100040
+    second: Tail01
+  - first:
+      1: 100042
+    second: Tail02
+  - first:
+      1: 100044
+    second: Tail03
+  - first:
+      1: 100046
+    second: Tail04
+  - first:
+      1: 100048
+    second: Toe_L
+  - first:
+      1: 100050
+    second: Toe_R
+  - first:
+      1: 100052
+    second: UpperArm_L
+  - first:
+      1: 100054
+    second: UpperArm_R
+  - first:
+      1: 100056
+    second: UpperBeak
+  - first:
+      1: 100058
+    second: UpperBeakTip
+  - first:
+      1: 100060
+    second: UpperLeg_L
+  - first:
+      1: 100062
+    second: UpperReg_R
+  - first:
+      1: 100064
+    second: Wing01_L
+  - first:
+      1: 100066
+    second: Wing01_R
+  - first:
+      1: 100068
+    second: Wing02_L
+  - first:
+      1: 100070
+    second: Wing02_R
+  - first:
+      1: 100072
+    second: Wing03_L
+  - first:
+      1: 100074
+    second: Wing03_R
+  - first:
+      1: 100076
+    second: Wing04_L
+  - first:
+      1: 100078
+    second: Wing04_R
+  - first:
+      4: 400000
+    second: Chest
+  - first:
+      4: 400002
+    second: Finger_L
+  - first:
+      4: 400004
+    second: Finger_R
+  - first:
+      4: 400006
+    second: Foot_L
+  - first:
+      4: 400008
+    second: Foot_R
+  - first:
+      4: 400010
+    second: //RootNode
+  - first:
+      4: 400012
+    second: GriffinMesh
+  - first:
+      4: 400014
+    second: Hand_L
+  - first:
+      4: 400016
+    second: Hand_R
+  - first:
+      4: 400018
+    second: Head
+  - first:
+      4: 400020
+    second: Hips
+  - first:
+      4: 400022
+    second: LowerArm_L
+  - first:
+      4: 400024
+    second: LowerBeak
+  - first:
+      4: 400026
+    second: LowerBeakTip
+  - first:
+      4: 400028
+    second: LowerLeg_L
+  - first:
+      4: 400030
+    second: Neck01
+  - first:
+      4: 400032
+    second: Neck02
+  - first:
+      4: 400034
+    second: RowerArm_R
+  - first:
+      4: 400036
+    second: RowerReg_R
+  - first:
+      4: 400038
+    second: Spine
+  - first:
+      4: 400040
+    second: Tail01
+  - first:
+      4: 400042
+    second: Tail02
+  - first:
+      4: 400044
+    second: Tail03
+  - first:
+      4: 400046
+    second: Tail04
+  - first:
+      4: 400048
+    second: Toe_L
+  - first:
+      4: 400050
+    second: Toe_R
+  - first:
+      4: 400052
+    second: UpperArm_L
+  - first:
+      4: 400054
+    second: UpperArm_R
+  - first:
+      4: 400056
+    second: UpperBeak
+  - first:
+      4: 400058
+    second: UpperBeakTip
+  - first:
+      4: 400060
+    second: UpperLeg_L
+  - first:
+      4: 400062
+    second: UpperReg_R
+  - first:
+      4: 400064
+    second: Wing01_L
+  - first:
+      4: 400066
+    second: Wing01_R
+  - first:
+      4: 400068
+    second: Wing02_L
+  - first:
+      4: 400070
+    second: Wing02_R
+  - first:
+      4: 400072
+    second: Wing03_L
+  - first:
+      4: 400074
+    second: Wing03_R
+  - first:
+      4: 400076
+    second: Wing04_L
+  - first:
+      4: 400078
+    second: Wing04_R
+  - first:
+      43: 4300000
+    second: GriffinMesh
+  - first:
+      74: 7400000
+    second: Idle
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: GriffinMesh
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -98,6 +266,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -107,7 +276,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -118,6 +287,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 40
       wrapMode: 0
@@ -230,25 +400,36 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -257,10 +438,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -270,13 +451,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

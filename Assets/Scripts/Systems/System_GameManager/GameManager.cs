@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     private int _unitsDeadAllRounds;
     private float _postWaveTimer;
 
+    [SerializeField] private bool _isCrashTesting;
     [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private float _timeBetweenWave;
     private float _currentSpawnerTimer;
@@ -160,14 +161,22 @@ public class GameManager : MonoBehaviour
     #region InWave State
     private void StartInWave()
     {
-        if(_currentRound == 0)
-        {
-            _currentSpawnCount = _spawnData.BaseSpawnCount;
-        }
-        else
-        {
-            _currentSpawnCount = _spawnData.BaseSpawnCount * (_currentRound * (_spawnData.BaseSpawnCount / 2));
-        }
+         if (_isCrashTesting)
+         {
+             _currentSpawnCount = _spawnData.CrashTestSpawnCount;
+         }
+         else
+         {
+             if (_currentRound == 0)
+             {
+                 _currentSpawnCount = _spawnData.BaseSpawnCount;
+             }
+             else
+             {
+                 _currentSpawnCount = _spawnData.BaseSpawnCount * (_currentRound * (_spawnData.BaseSpawnCount / 2));
+             }
+         }
+
 
         _currentRound++;
         _inWaveHasStarted = true;
@@ -222,8 +231,11 @@ public class GameManager : MonoBehaviour
     {
         _postWaveTimer += Time.deltaTime;
 
-        if(_postWaveTimer >= 8.0f)
+        if(MapManager.instance.AllShipsPatrolTurnEnded())
         {
+            MapManager.instance.IsTimeSpeeding = false;
+            MapManager.instance.ResetAllShips();
+
             EndPostWave();
         }
     }
@@ -242,8 +254,6 @@ public class GameManager : MonoBehaviour
     {
         _postWaveTimer = 0.0f;
         _currentGameState = GameState.PreWave;
-        MapManager.instance.IsTimeSpeeding = false;
-
 
         _postWaveHasStarted = false;
     }

@@ -21,7 +21,12 @@ public class MapManager : MonoBehaviour
     [SerializeField] private bool _isSunRotating;
     [SerializeField] private float _rotatingSpeed;
     [SerializeField] private Transform _directionalLightTransform;
-    private DirectionalLight _directionalLight;
+    private Light _directionalLight;
+
+    [SerializeField] private List<Light> _lights;
+    private float _currentLightIntensity;
+    private float _angleValue;
+
 
 
     [Header("BackGround Fields")]
@@ -75,7 +80,7 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        // _directionalLight = _directionalLightTransform.GetComponent<Light>();
+        _directionalLight = _directionalLightTransform.GetComponent<Light>();
 
         for(int i = 0; i < _shipsArray.Length; i++)
         {
@@ -83,23 +88,59 @@ public class MapManager : MonoBehaviour
             _shipsArray[i]._baseShipPoint.SetPositionAndRotation(_shipsArray[i]._shipTransform.position, _shipsArray[i]._shipTransform.rotation);
         }
 
+       /*Texture2D texture = ScreenCapture.CaptureScreenshotAsTexture();
+        Color[] colorsArray = texture.GetPixels(texture.width / 2, texture.height / 2, 5, 5);
+        foreach (Color color in colorsArray)
+        {
+            
+        }*/
+
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //angleValue = Vector3.Angle(Vector3.up, _directionalLightTransform.rotation.eulerAngles);
+        //angleValue = Quaternion.Angle(Quaternion.LookRotation(Vector3.up), _directionalLightTransform.localRotation);
+
+        _angleValue = Quaternion.Angle(Quaternion.LookRotation(Vector3.up), _directionalLightTransform.rotation);
+        if(_angleValue >= 110)
+        {
+            Debug.Log("Jour");
+            _currentLightIntensity = Mathf.Lerp(_currentLightIntensity, 0, Time.deltaTime);
+
+        }
+        else
+        {
+            Debug.Log("Nuit");
+            _currentLightIntensity = Mathf.Lerp(_currentLightIntensity, 25.0f, Time.deltaTime);
+        }
+
+
+        if (_angleValue >= 90)
+        {
+            Debug.Log("Jour");
+            _directionalLight.intensity = Mathf.Lerp(_directionalLight.intensity, 1, Time.deltaTime);
+
+        }
+        else
+        {
+            Debug.Log("Nuit");
+            _directionalLight.intensity = Mathf.Lerp(_directionalLight.intensity, 0, Time.deltaTime);
+        }
+
+        foreach (Light light in _lights)
+        {
+            light.intensity = _currentLightIntensity;
+        }
+
+
 
         if (_isTimeSpeeding)
         {
-            if (AllShipsPatrolTurnEnded())
-            {
-                _isTimeSpeeding = false;
-                ResetAllShips();
-            }
-            else
-            {
-                UpdatingShipFunction();
-            }
+            UpdatingShipFunction();
 
             _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
             _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _fastBackGroundMovingSpeed, Time.deltaTime * 0.7f);
@@ -208,13 +249,24 @@ public class MapManager : MonoBehaviour
                     }
 
                     EndPatrol(_shipsArray[i]._shipTransform, _shipsArray[i]._endAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform);
+                    
+
+/*
+                    if (_shipsArray[i]._baseShipPoint.position == _shipsArray[i]._shipTransform.position)
+                    {
+                        
+                        _shipsArray[i]._finishedPatrol = true;
+                        
+                    }
+                    
+                    EndPatrol(_shipsArray[i]._shipTransform, _shipsArray[i]._baseShipPoint);*/
                 }
             }
             
         }
     }
 
-    void ResetAllShips()
+    public void ResetAllShips()
     {
         for(int i = 0; i < _shipsArray.Length; i++)
         {
@@ -251,12 +303,19 @@ public class MapManager : MonoBehaviour
         ship.position = Vector3.Lerp(ship.position, target.position, Time.deltaTime);
     }
 
-    bool AllShipsPatrolTurnEnded()
+    public bool AllShipsPatrolTurnEnded()
     {
         foreach (var ship in _shipsArray)
         {
-            if (ship._finishedPatrol) continue;
-            else return false;
+            if (ship._finishedPatrol)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         return true;
@@ -268,7 +327,8 @@ public class MapManager : MonoBehaviour
         Gizmos.DrawCube(_backgroundElementsParent.position, _backgroundBoundingBox);
 
 
-        
+
+
         Gizmos.color = Color.green;
         for(int i = 0; i < _shipsArray.Length; i++)
         {
