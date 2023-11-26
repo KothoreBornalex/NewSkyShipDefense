@@ -42,7 +42,7 @@ public class MapManager : MonoBehaviour
 
 
     [Header("Ship Fields")]
-    [SerializeField, Range(0, 60)] private float _shipMovingSpeed;
+    [SerializeField, Range(0, 500)] private float _shipMovingSpeed;
     [SerializeField, Range(0, 20)] private float _shipRotatingSpeed;
 
     [SerializeField] private ShipPatrolStruct[] _shipsArray;
@@ -55,6 +55,7 @@ public class MapManager : MonoBehaviour
         public bool _finishedPatrol;
         public bool _startPatrol;
         public int _currentPatrolPoint;
+        public Vector3 velocity;
 
         [HideInInspector] public Transform _baseShipPoint;
         public Transform[] _startAnimationPoints;
@@ -102,11 +103,43 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //angleValue = Vector3.Angle(Vector3.up, _directionalLightTransform.rotation.eulerAngles);
-        //angleValue = Quaternion.Angle(Quaternion.LookRotation(Vector3.up), _directionalLightTransform.localRotation);
+        HandlingLights();
+
+
+
+        if (_isTimeSpeeding)
+        {
+            UpdatingShipFunction();
+
+            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
+            _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _fastBackGroundMovingSpeed, Time.deltaTime * 0.7f);
+        }
+        else
+        {
+            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _slowTimeSpeed, Time.deltaTime * 5.0F);
+            _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _slowBackGroundMovingSpeed, Time.deltaTime * 0.7f);
+        }
+
+        _currentDeltaTime = Time.deltaTime * _currentTimeSpeed;
+
+
+        if (_isBackGroundMoving)
+        {
+            UpdateMovingFunction();
+        }
+
+        
+    }
+
+    void HandlingLights()
+    {
+        if (_isSunRotating)
+        {
+            _directionalLightTransform.Rotate(new Vector3(_rotatingSpeed * _currentDeltaTime, 0, 0));
+        }
 
         _angleValue = Quaternion.Angle(Quaternion.LookRotation(Vector3.up), _directionalLightTransform.rotation);
-        if(_angleValue >= 110)
+        if (_angleValue >= 110)
         {
             Debug.Log("Jour");
             _currentLightIntensity = Mathf.Lerp(_currentLightIntensity, 0, Time.deltaTime);
@@ -135,37 +168,7 @@ public class MapManager : MonoBehaviour
         {
             light.intensity = _currentLightIntensity;
         }
-
-
-
-        if (_isTimeSpeeding)
-        {
-            UpdatingShipFunction();
-
-            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
-            _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _fastBackGroundMovingSpeed, Time.deltaTime * 0.7f);
-        }
-        else
-        {
-            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _slowTimeSpeed, Time.deltaTime * 5.0F);
-            _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _slowBackGroundMovingSpeed, Time.deltaTime * 0.7f);
-        }
-
-        _currentDeltaTime = Time.deltaTime * _currentTimeSpeed;
-
-
-        if (_isBackGroundMoving)
-        {
-            UpdateMovingFunction();
-        }
-
-        if(_isSunRotating)
-        {
-            _directionalLightTransform.Rotate(new Vector3(_rotatingSpeed * _currentDeltaTime, 0, 0));
-        }
     }
-
-
 
     void UpdateMovingFunction()
     {
@@ -221,7 +224,7 @@ public class MapManager : MonoBehaviour
 
                     }
 
-                    TranslateShipTransform(_shipsArray[i]._shipTransform, _shipsArray[i]._startAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform);
+                    TranslateShipTransform(i, _shipsArray[i]._startAnimationPoints[_shipsArray[i]._currentPatrolPoint].transform);
 
                 }
 
@@ -277,8 +280,9 @@ public class MapManager : MonoBehaviour
     }
 
 
-    public void TranslateShipTransform(Transform ship, Transform target)
+    public void TranslateShipTransform(int shipIndex, Transform target)
     {
+        Transform ship = _shipsArray[shipIndex]._shipTransform;
 
         Vector3 relativePos = target.position - ship.position;
 
@@ -286,7 +290,9 @@ public class MapManager : MonoBehaviour
         
         ship.rotation = Quaternion.Lerp(ship.rotation, newRotation, Time.deltaTime * _shipRotatingSpeed);
 
-        ship.position = Vector3.Lerp(ship.position, target.position, Time.deltaTime * _shipMovingSpeed);
+        //ship.position = Vector3.Slerp(ship.position, target.position, Time.deltaTime * _shipMovingSpeed);
+        ship.position = Vector3.SmoothDamp(ship.position, target.position, ref _shipsArray[shipIndex].velocity, Time.deltaTime * _shipMovingSpeed);
+
     }
 
 
