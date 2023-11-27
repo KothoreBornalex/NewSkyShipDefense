@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class MapManager : MonoBehaviour
 {
@@ -88,15 +87,6 @@ public class MapManager : MonoBehaviour
             _shipsArray[i]._baseShipPoint = Instantiate<GameObject>(new GameObject(), transform).transform;
             _shipsArray[i]._baseShipPoint.SetPositionAndRotation(_shipsArray[i]._shipTransform.position, _shipsArray[i]._shipTransform.rotation);
         }
-
-       /*Texture2D texture = ScreenCapture.CaptureScreenshotAsTexture();
-        Color[] colorsArray = texture.GetPixels(texture.width / 2, texture.height / 2, 5, 5);
-        foreach (Color color in colorsArray)
-        {
-            
-        }*/
-
-
         
     }
 
@@ -111,13 +101,13 @@ public class MapManager : MonoBehaviour
         {
             UpdatingShipFunction();
 
-            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
-            _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _fastBackGroundMovingSpeed, Time.deltaTime * 0.7f);
+            _currentTimeSpeed = Mathf.MoveTowards(_currentTimeSpeed, _fastTimeSpeed, Time.deltaTime * 0.7F);
+            _currentBackGroundMovingSpeed = Mathf.MoveTowards(_currentBackGroundMovingSpeed, _fastBackGroundMovingSpeed, Time.deltaTime * 0.7f);
         }
         else
         {
-            _currentTimeSpeed = Mathf.Lerp(_currentTimeSpeed, _slowTimeSpeed, Time.deltaTime * 5.0F);
-            _currentBackGroundMovingSpeed = Mathf.Lerp(_currentBackGroundMovingSpeed, _slowBackGroundMovingSpeed, Time.deltaTime * 0.7f);
+            _currentTimeSpeed = Mathf.MoveTowards(_currentTimeSpeed, _slowTimeSpeed, Time.deltaTime * 5.0F);
+            _currentBackGroundMovingSpeed = Mathf.MoveTowards(_currentBackGroundMovingSpeed, _slowBackGroundMovingSpeed, Time.deltaTime * 0.7f);
         }
 
         _currentDeltaTime = Time.deltaTime * _currentTimeSpeed;
@@ -141,26 +131,21 @@ public class MapManager : MonoBehaviour
         _angleValue = Quaternion.Angle(Quaternion.LookRotation(Vector3.up), _directionalLightTransform.rotation);
         if (_angleValue >= 110)
         {
-            Debug.Log("Jour");
             _currentLightIntensity = Mathf.Lerp(_currentLightIntensity, 0, Time.deltaTime);
-
         }
         else
         {
-            Debug.Log("Nuit");
             _currentLightIntensity = Mathf.Lerp(_currentLightIntensity, 25.0f, Time.deltaTime);
         }
 
 
         if (_angleValue >= 90)
         {
-            Debug.Log("Jour");
             _directionalLight.intensity = Mathf.Lerp(_directionalLight.intensity, 1, Time.deltaTime);
 
         }
         else
         {
-            Debug.Log("Nuit");
             _directionalLight.intensity = Mathf.Lerp(_directionalLight.intensity, 0, Time.deltaTime);
         }
 
@@ -326,6 +311,17 @@ public class MapManager : MonoBehaviour
 
         return true;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     void OnDrawGizmos()
     {

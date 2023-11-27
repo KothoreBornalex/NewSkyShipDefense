@@ -15071,6 +15071,7 @@ GameObject:
   - component: {fileID: 2264145547278940078}
   - component: {fileID: 2264145547278940077}
   - component: {fileID: 2264145547278940076}
+  - component: {fileID: 6445773412769434942}
   m_Layer: 0
   m_Name: FX_splash_reaper_floor
   m_TagString: Untagged
@@ -20038,6 +20039,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6445773412769434942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264145547278940075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcee819183a2c5d4893a297c9577f741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timer: 5
 --- !u!1 &2264145548487913251
 GameObject:
   m_ObjectHideFlags: 0

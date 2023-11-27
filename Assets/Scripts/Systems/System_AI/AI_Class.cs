@@ -1,9 +1,11 @@
+using MoreMountains.Feedbacks;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static IStatistics;
+using UnityEngine.Events;
 
 public class AI_Class : MonoBehaviour, IStatistics
 {
@@ -62,6 +64,9 @@ public class AI_Class : MonoBehaviour, IStatistics
     [SerializeField] private Transform _bulletSpawnPoint;
     private float _attackTimer;
 
+    [Header("FeedBacks Set")]
+    [SerializeField] private MMFeedbacks _hurtFeedBack;
+
     //Death Fields
     private float currentTimeSinceDeath;
 
@@ -92,7 +97,6 @@ public class AI_Class : MonoBehaviour, IStatistics
 
     private void Update()
     {
-
         if (_isAlive)
         {
             HandleChase();
@@ -380,12 +384,16 @@ public class AI_Class : MonoBehaviour, IStatistics
                 if (stats._statName == StatName.Health)
                 {
                     //AudioManager.instance.PlayOneShot_GlobalSound(FMODEvents.instance.Player_Hurt);
-                    _material.color = Color.red;
-                    _animator.SetTrigger(hash_GetHit);
 
                     if (stats._statCurrentValue <= 0 && _isAlive)
                     {
                         Death();
+                    }
+                    else
+                    {
+                        _material.color = Color.red;
+                        _animator.SetTrigger(hash_GetHit);
+                        _hurtFeedBack?.PlayFeedbacks();
                     }
                 }
 
