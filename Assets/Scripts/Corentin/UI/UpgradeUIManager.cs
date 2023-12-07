@@ -20,6 +20,10 @@ public class UpgradeUIManager : MonoBehaviour
 
     [SerializeField] private float _slideSpeed;
 
+    [SerializeField] private RectTransform _openCloseIcon;
+    [SerializeField] private float _rotationSpeed;
+
+
     [SerializeField] private Button[] _upgradeButtons;
     [SerializeField] private Color _upgradedColor;
 
@@ -37,11 +41,27 @@ public class UpgradeUIManager : MonoBehaviour
         {
             _isOpen = false;
             StartCoroutine(CloseUpgradePanel());
+            if(_openCloseIcon != null)
+            {
+                StartCoroutine(RotateCloseIcon());  // Rotate icon to arrow point top
+            }
+            else
+            {
+                Debug.LogWarning("Forgot to drag the icon ui button close/open so it won't rotate !!!");
+            }
         }
         else
         {
             _isOpen = true;
             StartCoroutine(OpenUpgradePanel());
+            if(_openCloseIcon != null)
+            {
+                StartCoroutine(RotateOpenIcon());   // Rotate icon to arrow point down
+            }
+            else
+            {
+                Debug.LogWarning("Forgot to drag the icon ui button close/open so it won't rotate !!!");
+            }
         }
     }
 
@@ -122,6 +142,42 @@ public class UpgradeUIManager : MonoBehaviour
             _upgradeSkillsPanel.position = positionTemp;
 
             _upgradesPack.position = upPositionTemp;
+
+            yield return null;
+        }
+
+        yield return null;
+    }
+
+
+    IEnumerator RotateOpenIcon()
+    {
+        Vector3 rotationTemp = _openCloseIcon.rotation.eulerAngles;
+
+        Vector3 rotationOpened = new Vector3(0, 0, 0);  // fleche pointant vers bas
+
+        while (_openCloseIcon.rotation.eulerAngles.z != rotationOpened.z && _isOpen)
+        {
+            rotationTemp.z = Mathf.Lerp(_openCloseIcon.rotation.eulerAngles.z, rotationOpened.z, Time.deltaTime * _rotationSpeed);
+
+            _openCloseIcon.rotation = Quaternion.Euler(rotationTemp);
+
+            yield return null;
+        }
+
+        yield return null;
+    }
+    IEnumerator RotateCloseIcon()
+    {
+        Vector3 rotationTemp = _openCloseIcon.rotation.eulerAngles;
+
+        Vector3 rotationClosed = new Vector3(0, 0, 180);  // fleche pointant vers haut
+
+        while (_openCloseIcon.rotation.eulerAngles.z != rotationClosed.z && !_isOpen)
+        {
+            rotationTemp.z = Mathf.Lerp(_openCloseIcon.rotation.eulerAngles.z, rotationClosed.z, Time.deltaTime * _rotationSpeed);
+
+            _openCloseIcon.rotation = Quaternion.Euler(rotationTemp);
 
             yield return null;
         }

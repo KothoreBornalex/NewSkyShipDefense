@@ -642,6 +642,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1793357689 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5387712944799738026, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+  m_PrefabInstance: {fileID: 7761023133011099276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3731891093709484710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -843,6 +848,14 @@ PrefabInstance:
       propertyPath: _playerAttack
       value: 
       objectReference: {fileID: 663541630}
+    - target: {fileID: 2129601659817862778, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: _openCloseIcon
+      value: 
+      objectReference: {fileID: 1793357689}
+    - target: {fileID: 2129601659817862778, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: _rotationSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3717896038179091797, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

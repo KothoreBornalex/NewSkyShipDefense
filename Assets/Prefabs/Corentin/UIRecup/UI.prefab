@@ -4768,6 +4768,8 @@ MonoBehaviour:
   _upgradesClosePosition: {fileID: 538312282803914117}
   _upgradesPack: {fileID: 6996017749575058777}
   _slideSpeed: 2
+  _openCloseIcon: {fileID: 5387712944799738026}
+  _rotationSpeed: 3
   _upgradeButtons:
   - {fileID: 934044533654888339}
   - {fileID: 3879103746495649087}
