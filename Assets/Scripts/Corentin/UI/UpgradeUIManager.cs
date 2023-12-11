@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,7 @@ public class UpgradeUIManager : MonoBehaviour
 
     [SerializeField] private playerAttack _playerAttack;
 
+    
     [SerializeField] private Slider _staminaSlider;
     [SerializeField] private float _staminaMaxValue;
     [SerializeField] private float _staminaCurrentValue;
@@ -36,6 +38,14 @@ public class UpgradeUIManager : MonoBehaviour
     private Coroutine _staminaSlideCoroutine;
     [SerializeField] private float _staminaSlideSpeed;
 
+
+    [SerializeField] private int _waveCurrentValue;
+    private int _waveCheckValue;
+    [SerializeField] private TextMeshProUGUI _waveText;
+
+    [SerializeField] private int _xpCurrentValue;
+    private int _xpCheckValue;
+    [SerializeField] private TextMeshProUGUI _xpText;
 
     // Properties
 
@@ -104,13 +114,32 @@ public class UpgradeUIManager : MonoBehaviour
         // If staminaCurrentValue != gmaManager.GetStaminaValue()
             // Change staminaValue
     }
-    private void UpdateStaminaSlider()  // Update state of stamina slider
+    private void UpdateStaminaSlider()  // Update state of stamina slider with coroutine
     {
         if(_staminaSlideCoroutine != null)
         {
             StopCoroutine(_staminaSlideCoroutine);
         }
         _staminaSlideCoroutine = StartCoroutine(StaminaSlideCoroutine());
+    }
+
+    private void CheckXpValue()    // Check Xp value in gameManager(i suppose it will be in GM or in player)
+    {
+        // If _xpCurrentValue != gmaManager.GetXpValue()
+            // Change xpValue
+    }
+    private void UpdateXpText()
+    {
+        _xpText.text = _xpCurrentValue.ToString();
+    }
+    private void CheckWaveValue()   // Check Wave value in gameManager(i suppose it will be in GM or in player)
+    {
+        // If _waveCurrentValue != gmaManager.GetWaveValue()
+            // Change waveValue
+    }
+    private void UpdateWaveText()
+    {
+        _waveText.text = _waveCurrentValue.ToString();
     }
 
     private void OnValidate()
@@ -122,6 +151,24 @@ public class UpgradeUIManager : MonoBehaviour
             _staminaCheckValue = _staminaCurrentValue;
 
             UpdateStaminaSlider();
+        }
+        if(_xpCheckValue != _xpCurrentValue)
+        {
+            if(_xpCurrentValue < 0)
+            {
+                _xpCurrentValue = 0;
+            }
+            _xpCheckValue = _xpCurrentValue;
+            UpdateXpText();
+        }
+        if(_waveCheckValue != _waveCurrentValue)
+        {
+            if (_waveCurrentValue < 0)
+            {
+                _waveCurrentValue = 0;
+            }
+            _waveCheckValue = _waveCurrentValue;
+            UpdateWaveText();
         }
     }
     // Start is called before the first frame update
