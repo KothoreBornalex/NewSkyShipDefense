@@ -27,8 +27,12 @@ public class UpgradeUIManager : MonoBehaviour
 
     [SerializeField] private Button[] _upgradeButtons;
     [SerializeField] private Color _upgradedColor;
+    [SerializeField] private Color _toUpgradeColor;
 
     [SerializeField] private playerAttack _playerAttack;
+    [SerializeField] Slider _upgradeSliderSp1;
+    [SerializeField] Slider _upgradeSliderSp2;
+    [SerializeField] Slider _upgradeSliderSp3;
 
     
     [SerializeField] private Slider _staminaSlider;
@@ -83,30 +87,70 @@ public class UpgradeUIManager : MonoBehaviour
     }
     private void CheckStateLevels()     // Check if upgrade buttons must be in color in state acquired or not
     {
-        if (_playerAttack.Spell1Level != 0)
+        // Ancien code qui faisait afficher tout les boutons en clair sauf les lumineux. Si on veut remmettre ça ne pas oublier de retirer les sp1Up0 etc... dans la liste upgrades buttons !!!
+        //if (_playerAttack.Spell1Level != 0)
+        //{
+        //    if (_upgradeButtons[_playerAttack.Spell1Level - 1].GetComponent<Image>().color != _upgradedColor)
+        //    {
+        //        _upgradeButtons[_playerAttack.Spell1Level - 1].GetComponent<Image>().color = _upgradedColor;
+        //        _upgradeSliderSp1.value = (float)_playerAttack.Spell1Level / 3f;
+        //    }
+        //}
+        
+        //if(_playerAttack.Spell2Level != 0)
+        //{
+        //    if (_upgradeButtons[_playerAttack.Spell2Level + 2].GetComponent<Image>().color != _upgradedColor)
+        //    {
+        //        _upgradeButtons[_playerAttack.Spell2Level + 2].GetComponent<Image>().color = _upgradedColor;
+        //        _upgradeSliderSp2.value = (float) _playerAttack.Spell2Level / 3f;
+        //    }
+        //}
+        
+        //if (_playerAttack.Spell3Level != 0)
+        //{
+        //    if (_upgradeButtons[_playerAttack.Spell3Level + 5].GetComponent<Image>().color != _upgradedColor)
+        //    {
+        //        _upgradeButtons[_playerAttack.Spell3Level + 5].GetComponent<Image>().color = _upgradedColor;
+        //        _upgradeSliderSp3.value = (float)_playerAttack.Spell3Level / 3f;
+        //    }
+        //}
+
+        
+        if (_upgradeButtons[_playerAttack.Spell1Level].GetComponent<Image>().color != _upgradedColor)
         {
-            if (_upgradeButtons[_playerAttack.Spell1Level - 1].GetComponent<Image>().color != _upgradedColor)
+            _upgradeButtons[_playerAttack.Spell1Level].GetComponent<Image>().color = _upgradedColor;
+            _upgradeSliderSp1.value = (float)_playerAttack.Spell1Level / 3f;
+            if(_playerAttack.Spell1Level > 0)
             {
-                _upgradeButtons[_playerAttack.Spell1Level - 1].GetComponent<Image>().color = _upgradedColor;
+                _upgradeButtons[_playerAttack.Spell1Level - 1].GetComponent<Image>().color = _toUpgradeColor;
             }
         }
         
-        if(_playerAttack.Spell2Level != 0)
+
+        
+        if (_upgradeButtons[_playerAttack.Spell2Level + 4].GetComponent<Image>().color != _upgradedColor)
         {
-            if (_upgradeButtons[_playerAttack.Spell2Level + 2].GetComponent<Image>().color != _upgradedColor)
+            _upgradeButtons[_playerAttack.Spell2Level + 4].GetComponent<Image>().color = _upgradedColor;
+            _upgradeSliderSp2.value = (float)_playerAttack.Spell2Level / 3f;
+            if(_playerAttack.Spell2Level > 0)
             {
-                _upgradeButtons[_playerAttack.Spell2Level + 2].GetComponent<Image>().color = _upgradedColor;
+                _upgradeButtons[_playerAttack.Spell2Level + 3].GetComponent<Image>().color = _toUpgradeColor;
             }
         }
         
-        if (_playerAttack.Spell3Level != 0)
+
+        
+        if (_upgradeButtons[_playerAttack.Spell3Level + 8].GetComponent<Image>().color != _upgradedColor)
         {
-            if (_upgradeButtons[_playerAttack.Spell3Level + 5].GetComponent<Image>().color != _upgradedColor)
+            _upgradeButtons[_playerAttack.Spell3Level + 8].GetComponent<Image>().color = _upgradedColor;
+            _upgradeSliderSp3.value = (float)_playerAttack.Spell3Level / 3f;
+            if(_playerAttack.Spell3Level > 0)
             {
-                _upgradeButtons[_playerAttack.Spell3Level + 5].GetComponent<Image>().color = _upgradedColor;
+                _upgradeButtons[_playerAttack.Spell3Level + 7].GetComponent<Image>().color = _toUpgradeColor;
             }
         }
         
+
     }
 
     private void CheckStaminaValue()    // Check stamina value in gameManager(i suppose it will be in GM or in player)
@@ -177,6 +221,8 @@ public class UpgradeUIManager : MonoBehaviour
         _staminaCurrentValue = _staminaMaxValue;
         _staminaCheckValue = _staminaCurrentValue;
         UpdateStaminaSlider();
+        UpdateWaveText();
+        UpdateXpText();
     }
 
     // Update is called once per frame

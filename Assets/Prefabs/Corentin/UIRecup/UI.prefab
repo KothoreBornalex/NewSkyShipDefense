@@ -5604,17 +5604,24 @@ MonoBehaviour:
   _openCloseIcon: {fileID: 5387712944799738026}
   _rotationSpeed: 3
   _upgradeButtons:
+  - {fileID: 8778365669820429784}
   - {fileID: 934044533654888339}
   - {fileID: 3879103746495649087}
   - {fileID: 712430161116756640}
+  - {fileID: 3268881814452231232}
   - {fileID: 102620438977542649}
   - {fileID: 7301690952828194158}
   - {fileID: 1126402490783685202}
+  - {fileID: 2707960817740897814}
   - {fileID: 7795747237843940523}
   - {fileID: 7365675645817920078}
   - {fileID: 7123855801222019590}
   _upgradedColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+  _toUpgradeColor: {r: 1, g: 1, b: 1, a: 0.11372549}
   _playerAttack: {fileID: 0}
+  _upgradeSliderSp1: {fileID: 2633326160919258326}
+  _upgradeSliderSp2: {fileID: 168155748194378382}
+  _upgradeSliderSp3: {fileID: 7359319907016289838}
   _staminaSlider: {fileID: 7991351198659505303}
   _staminaMaxValue: 100
   _staminaCurrentValue: 0
