@@ -29,13 +29,20 @@ public class UpgradeUIManager : MonoBehaviour
 
     [SerializeField] private playerAttack _playerAttack;
 
+    [SerializeField] private Slider _staminaSlider;
+    [SerializeField] private float _staminaMaxValue;
+    [SerializeField] private float _staminaCurrentValue;
+    private float _staminaCheckValue;
+    private Coroutine _staminaSlideCoroutine;
+    [SerializeField] private float _staminaSlideSpeed;
+
 
     // Properties
 
 
 
     // Methods
-    public void UpgradeSkillsPanelSlide()
+    public void UpgradeSkillsPanelSlide()   // Manage the position and slide of upgrades Panel
     {
         if( _isOpen)
         {
@@ -64,8 +71,7 @@ public class UpgradeUIManager : MonoBehaviour
             }
         }
     }
-
-    private void CheckStateLevels()
+    private void CheckStateLevels()     // Check if upgrade buttons must be in color in state acquired or not
     {
         if (_playerAttack.Spell1Level != 0)
         {
@@ -93,10 +99,37 @@ public class UpgradeUIManager : MonoBehaviour
         
     }
 
+    private void CheckStaminaValue()    // Check stamina value in gameManager(i suppose it will be in GM or in player)
+    {
+        // If staminaCurrentValue != gmaManager.GetStaminaValue()
+            // Change staminaValue
+    }
+    private void UpdateStaminaSlider()  // Update state of stamina slider
+    {
+        if(_staminaSlideCoroutine != null)
+        {
+            StopCoroutine(_staminaSlideCoroutine);
+        }
+        _staminaSlideCoroutine = StartCoroutine(StaminaSlideCoroutine());
+    }
+
+    private void OnValidate()
+    {
+        if(_staminaCheckValue != _staminaCurrentValue)
+        {
+            _staminaCurrentValue = Mathf.Clamp(_staminaCurrentValue, 0, _staminaMaxValue);
+
+            _staminaCheckValue = _staminaCurrentValue;
+
+            UpdateStaminaSlider();
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        _staminaCurrentValue = _staminaMaxValue;
+        _staminaCheckValue = _staminaCurrentValue;
+        UpdateStaminaSlider();
     }
 
     // Update is called once per frame
@@ -178,6 +211,20 @@ public class UpgradeUIManager : MonoBehaviour
             rotationTemp.z = Mathf.Lerp(_openCloseIcon.rotation.eulerAngles.z, rotationClosed.z, Time.deltaTime * _rotationSpeed);
 
             _openCloseIcon.rotation = Quaternion.Euler(rotationTemp);
+
+            yield return null;
+        }
+
+        yield return null;
+    }
+
+
+    IEnumerator StaminaSlideCoroutine() // Coroutine to smooth stamina change visual in slider
+    {
+        float targetValue = _staminaCurrentValue / _staminaMaxValue;
+        while (_staminaSlider.value != targetValue)
+        {
+            _staminaSlider.value = Mathf.Lerp(_staminaSlider.value, targetValue, Time.deltaTime * _staminaSlideSpeed);
 
             yield return null;
         }
