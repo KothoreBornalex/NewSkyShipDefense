@@ -843,6 +843,22 @@ PrefabInstance:
       propertyPath: _playerAttack
       value: 
       objectReference: {fileID: 663541630}
+    - target: {fileID: 2217259746102766978, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2590609774575888284, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2977338097438778670, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992643804187429770, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3717896038179091797, guid: eb3f7196a52e4c94886c4b5821bb29fb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
