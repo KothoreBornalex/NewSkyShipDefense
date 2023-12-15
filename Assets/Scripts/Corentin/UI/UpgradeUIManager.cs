@@ -317,20 +317,20 @@ public class UpgradeUIManager : MonoBehaviour
 
     IEnumerator OpenUpgradePanel()
     {
-        Vector3 positionTemp = _upgradeSkillsPanel.position;
+        Vector3 positionTemp = _upgradeSkillsPanel.localPosition;
 
-        Vector3 upPositionTemp = _upgradesPack.position;
+        Vector3 upPositionTemp = _upgradesPack.localPosition;
         
-        while ((_upgradeSkillsPanel.position.y != _openPosition.position.y) && (_upgradesPack.position != _upgradesOpenPosition.position) && _isOpen)
+        while ((_upgradeSkillsPanel.localPosition.y != _openPosition.localPosition.y) && (_upgradesPack.localPosition != _upgradesOpenPosition.localPosition) && _isOpen)
         {
 
-            positionTemp.y = Mathf.Lerp(_upgradeSkillsPanel.position.y, _openPosition.position.y, Time.deltaTime * _slideSpeed);
+            positionTemp.y = Mathf.Lerp(_upgradeSkillsPanel.localPosition.y, _openPosition.localPosition.y, Time.deltaTime * _slideSpeed);
 
-            upPositionTemp.y = Mathf.Lerp(_upgradesPack.position.y, _upgradesOpenPosition.position.y, Time.deltaTime* _slideSpeed * 4f);
+            upPositionTemp.y = Mathf.Lerp(_upgradesPack.localPosition.y, _upgradesOpenPosition.localPosition.y, Time.deltaTime* _slideSpeed * 4f);
 
-            _upgradeSkillsPanel.position = positionTemp;
+            _upgradeSkillsPanel.localPosition = positionTemp;
 
-            _upgradesPack.position = upPositionTemp;
+            _upgradesPack.localPosition = upPositionTemp;
 
             yield return null;
         }
@@ -341,19 +341,19 @@ public class UpgradeUIManager : MonoBehaviour
     }
     IEnumerator CloseUpgradePanel()
     {
-        Vector3 positionTemp = _upgradeSkillsPanel.position;
+        Vector3 positionTemp = _upgradeSkillsPanel.localPosition;
 
-        Vector3 upPositionTemp = _upgradesPack.position;
+        Vector3 upPositionTemp = _upgradesPack.localPosition;
 
-        while ((_upgradeSkillsPanel.position.y != _closedPosition.position.y) && (_upgradesPack.position != _upgradesClosePosition.position) && !_isOpen)
+        while ((_upgradeSkillsPanel.localPosition.y != _closedPosition.localPosition.y) && (_upgradesPack.localPosition != _upgradesClosePosition.localPosition) && !_isOpen)
         {
-            positionTemp.y = Mathf.Lerp(_upgradeSkillsPanel.position.y, _closedPosition.position.y, Time.deltaTime * _slideSpeed);
+            positionTemp.y = Mathf.Lerp(_upgradeSkillsPanel.localPosition.y, _closedPosition.localPosition.y, Time.deltaTime * _slideSpeed);
 
-            upPositionTemp.y = Mathf.Lerp(_upgradesPack.position.y, _upgradesClosePosition.position.y, Time.deltaTime * _slideSpeed * 4f);
+            upPositionTemp.y = Mathf.Lerp(_upgradesPack.localPosition.y, _upgradesClosePosition.localPosition.y, Time.deltaTime * _slideSpeed * 4f);
 
-            _upgradeSkillsPanel.position = positionTemp;
+            _upgradeSkillsPanel.localPosition = positionTemp;
 
-            _upgradesPack.position = upPositionTemp;
+            _upgradesPack.localPosition = upPositionTemp;
 
             yield return null;
         }
