@@ -65,11 +65,13 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField] private GameObject _bordersSpell3;
 
     [Header("Elements")]
-
-    [SerializeField] private Image _element1BackgroundImage;
-    [SerializeField] private Image _element2BackgroundImage;
-    [SerializeField] private Image _element3BackgroundImage;
-
+    [SerializeField] private Image _elementTopBackgroundImage;
+    [SerializeField] private Image _elementMidBackgroundImage;
+    [SerializeField] private Image _elementBotBackgroundImage;
+    [SerializeField] RectTransform _indicatorRectTrans;
+    [SerializeField] RectTransform _posTopRectTrans;
+    [SerializeField] RectTransform _posMidRectTrans;
+    [SerializeField] RectTransform _posBotRectTrans;
 
     // Properties
 
@@ -80,7 +82,7 @@ public class UpgradeUIManager : MonoBehaviour
     {
         switch (index)
         {
-            case 1:
+            case 1: // spell 1
                 _spell1BackgroundImage.color = _selectedColor;
                 _spell2BackgroundImage.color = _unselectedColor;
                 _spell3BackgroundImage.color = _unselectedColor;
@@ -88,7 +90,7 @@ public class UpgradeUIManager : MonoBehaviour
                 _bordersSpell2.SetActive(false);
                 _bordersSpell3.SetActive(false);
                 break;
-            case 2:
+            case 2: // spell 2
                 _spell1BackgroundImage.color = _unselectedColor;
                 _spell2BackgroundImage.color = _selectedColor;
                 _spell3BackgroundImage.color = _unselectedColor;
@@ -96,7 +98,7 @@ public class UpgradeUIManager : MonoBehaviour
                 _bordersSpell2.SetActive(true);
                 _bordersSpell3.SetActive(false);
                 break;
-            case 3:
+            case 3: // spell 3
                 _spell1BackgroundImage.color = _unselectedColor;
                 _spell2BackgroundImage.color = _unselectedColor;
                 _spell3BackgroundImage.color = _selectedColor;
@@ -106,6 +108,31 @@ public class UpgradeUIManager : MonoBehaviour
                 break;
         }
     }
+    public void ChangeElementColorState(int index)
+    {
+        switch (index)
+        {
+            case 1: // top
+                _elementTopBackgroundImage.color = _selectedColor;
+                _elementMidBackgroundImage.color = _unselectedColor;
+                _elementBotBackgroundImage.color = _unselectedColor;
+                _indicatorRectTrans.position = _posTopRectTrans.position;
+                break;
+            case 2: // mid
+                _elementTopBackgroundImage.color = _unselectedColor;
+                _elementMidBackgroundImage.color = _selectedColor;
+                _elementBotBackgroundImage.color = _unselectedColor;
+                _indicatorRectTrans.position = _posMidRectTrans.position;
+                break;
+            case 3: // bot
+                _elementTopBackgroundImage.color = _unselectedColor;
+                _elementMidBackgroundImage.color = _unselectedColor;
+                _elementBotBackgroundImage.color = _selectedColor;
+                _indicatorRectTrans.position = _posBotRectTrans.position;
+                break;
+        }
+    }
+
     public void UpgradeSkillsPanelSlide()   // Manage the position and slide of upgrades Panel
     {
         if( _isOpen)
@@ -176,8 +203,6 @@ public class UpgradeUIManager : MonoBehaviour
             }
         }
         
-
-        
         if (_upgradeButtons[_playerAttack.Spell2Level + 4].GetComponent<Image>().color != _upgradedColor)
         {
             _upgradeButtons[_playerAttack.Spell2Level + 4].GetComponent<Image>().color = _upgradedColor;
@@ -188,8 +213,6 @@ public class UpgradeUIManager : MonoBehaviour
             }
         }
         
-
-        
         if (_upgradeButtons[_playerAttack.Spell3Level + 8].GetComponent<Image>().color != _upgradedColor)
         {
             _upgradeButtons[_playerAttack.Spell3Level + 8].GetComponent<Image>().color = _upgradedColor;
@@ -199,8 +222,6 @@ public class UpgradeUIManager : MonoBehaviour
                 _upgradeButtons[_playerAttack.Spell3Level + 7].GetComponent<Image>().color = _toUpgradeColor;
             }
         }
-        
-
     }
 
     private void CheckStaminaValue()    // Check stamina value in gameManager(i suppose it will be in GM or in player)
@@ -274,6 +295,7 @@ public class UpgradeUIManager : MonoBehaviour
         UpdateWaveText();
         UpdateXpText();
         ChangeSpellColorState(1);
+        ChangeElementColorState(1);
     }
 
     // Update is called once per frame
