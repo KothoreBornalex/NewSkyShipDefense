@@ -57,13 +57,19 @@ public class UpgradeUIManager : MonoBehaviour
     [Header("Spells")]
     [SerializeField] private Color _selectedColor;
     [SerializeField] private Color _unselectedColor;
-
     [SerializeField] private Image _spell1BackgroundImage;
     [SerializeField] private Image _spell2BackgroundImage;
     [SerializeField] private Image _spell3BackgroundImage;
     [SerializeField] private GameObject _bordersSpell1;
     [SerializeField] private GameObject _bordersSpell2;
     [SerializeField] private GameObject _bordersSpell3;
+
+    [Header("Elements")]
+
+    [SerializeField] private Image _element1BackgroundImage;
+    [SerializeField] private Image _element2BackgroundImage;
+    [SerializeField] private Image _element3BackgroundImage;
+
 
     // Properties
 
