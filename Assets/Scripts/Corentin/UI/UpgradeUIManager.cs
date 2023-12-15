@@ -68,10 +68,13 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField] private Image _elementTopBackgroundImage;
     [SerializeField] private Image _elementMidBackgroundImage;
     [SerializeField] private Image _elementBotBackgroundImage;
-    [SerializeField] RectTransform _indicatorRectTrans;
-    [SerializeField] RectTransform _posTopRectTrans;
-    [SerializeField] RectTransform _posMidRectTrans;
-    [SerializeField] RectTransform _posBotRectTrans;
+    [SerializeField] private RectTransform _indicatorRectTrans;
+    [SerializeField] private float _indicatorSpeed;
+    [SerializeField] private RectTransform _posTopRectTrans;
+    [SerializeField] private RectTransform _posMidRectTrans;
+    [SerializeField] private RectTransform _posBotRectTrans;
+    private Vector3 _targetIndPos;
+    private Coroutine _indicatorSlideCoroutine;
 
     // Properties
 
@@ -116,20 +119,24 @@ public class UpgradeUIManager : MonoBehaviour
                 _elementTopBackgroundImage.color = _selectedColor;
                 _elementMidBackgroundImage.color = _unselectedColor;
                 _elementBotBackgroundImage.color = _unselectedColor;
-                _indicatorRectTrans.position = _posTopRectTrans.position;
+                _targetIndPos = _posTopRectTrans.position;
                 break;
             case 2: // mid
                 _elementTopBackgroundImage.color = _unselectedColor;
                 _elementMidBackgroundImage.color = _selectedColor;
                 _elementBotBackgroundImage.color = _unselectedColor;
-                _indicatorRectTrans.position = _posMidRectTrans.position;
+                _targetIndPos = _posMidRectTrans.position;
                 break;
             case 3: // bot
                 _elementTopBackgroundImage.color = _unselectedColor;
                 _elementMidBackgroundImage.color = _unselectedColor;
                 _elementBotBackgroundImage.color = _selectedColor;
-                _indicatorRectTrans.position = _posBotRectTrans.position;
+                _targetIndPos = _posBotRectTrans.position;
                 break;
+        }
+        if (_indicatorSlideCoroutine == null)
+        {
+            _indicatorSlideCoroutine = StartCoroutine(IndicatorSlideCoroutine());
         }
     }
 
@@ -347,8 +354,6 @@ public class UpgradeUIManager : MonoBehaviour
 
         yield return null;
     }
-
-
     IEnumerator RotateOpenIcon()
     {
         Vector3 rotationTemp = _openCloseIcon.rotation.eulerAngles;
@@ -394,6 +399,28 @@ public class UpgradeUIManager : MonoBehaviour
 
             yield return null;
         }
+
+        yield return null;
+    }
+
+    IEnumerator IndicatorSlideCoroutine()
+    {
+        while ((_indicatorRectTrans.position - _targetIndPos).magnitude > 0.2f)
+        {
+            Vector3 tempVector = _indicatorRectTrans.position;
+
+            float currentY = _indicatorRectTrans.position.y;
+
+            currentY = Mathf.Lerp(currentY, _targetIndPos.y, Time.deltaTime * _indicatorSpeed);
+
+            tempVector.y = currentY;
+
+            _indicatorRectTrans.position = tempVector;
+
+            yield return null;
+        }
+
+        _indicatorSlideCoroutine = null;
 
         yield return null;
     }
