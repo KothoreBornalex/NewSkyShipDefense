@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class UpgradeUIManager : MonoBehaviour
 {
     // Fields
+
+    [Header("Upgrades smooth")]
     [SerializeField] private RectTransform _upgradeSkillsPanel;
 
     [SerializeField] private RectTransform _openPosition;
@@ -24,7 +26,7 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField] private RectTransform _openCloseIcon;
     [SerializeField] private float _rotationSpeed;
 
-
+    [Header("Upgrades")]
     [SerializeField] private Button[] _upgradeButtons;
     [SerializeField] private Color _upgradedColor;
     [SerializeField] private Color _toUpgradeColor;
@@ -34,7 +36,7 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField] Slider _upgradeSliderSp2;
     [SerializeField] Slider _upgradeSliderSp3;
 
-    
+    [Header("Stamina")]
     [SerializeField] private Slider _staminaSlider;
     [SerializeField] private float _staminaMaxValue;
     [SerializeField] private float _staminaCurrentValue;
@@ -42,11 +44,12 @@ public class UpgradeUIManager : MonoBehaviour
     private Coroutine _staminaSlideCoroutine;
     [SerializeField] private float _staminaSlideSpeed;
 
-
+    [Header("Wave")]
     [SerializeField] private int _waveCurrentValue;
     private int _waveCheckValue;
     [SerializeField] private TextMeshProUGUI _waveText;
 
+    [Header("XP")]
     [SerializeField] private int _xpCurrentValue;
     private int _xpCheckValue;
     [SerializeField] private TextMeshProUGUI _xpText;
@@ -56,6 +59,10 @@ public class UpgradeUIManager : MonoBehaviour
 
 
     // Methods
+    public void ChangeSpellColorState()
+    {
+
+    }
     public void UpgradeSkillsPanelSlide()   // Manage the position and slide of upgrades Panel
     {
         if( _isOpen)
