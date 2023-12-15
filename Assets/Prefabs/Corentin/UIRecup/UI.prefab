@@ -712,6 +712,41 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &497518068168594195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2083799110385176443}
+  m_Layer: 5
+  m_Name: NewWaveDisappearTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2083799110385176443
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497518068168594195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 467550752644033695}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -453, y: 838}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &528664165576615372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,7 +2425,7 @@ GameObject:
   - component: {fileID: 139711006191570468}
   - component: {fileID: 7060457024077348984}
   m_Layer: 5
-  m_Name: NewWaveImage
+  m_Name: NewWaveSkullImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2405,7 +2440,7 @@ RectTransform:
   m_GameObject: {fileID: 1958316469566378025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 467550752644033695}
@@ -2413,7 +2448,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 385}
-  m_SizeDelta: {x: 492, y: 390}
+  m_SizeDelta: {x: 82, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &139711006191570468
 CanvasRenderer:
@@ -9486,6 +9521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 467550752644033695}
+  - component: {fileID: 3910779845100844801}
   m_Layer: 5
   m_Name: NewWaveIndicator
   m_TagString: Untagged
@@ -9507,6 +9543,7 @@ RectTransform:
   m_Children:
   - {fileID: 3104869258595609850}
   - {fileID: 6825395817391014144}
+  - {fileID: 2083799110385176443}
   m_Father: {fileID: 6927863479161426880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -9514,6 +9551,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3910779845100844801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175904191034519419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e58bd733e644b498d3a28a5add63cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradeUIManager: {fileID: 2129601659817862778}
+  _indicatorSkullImage: {fileID: 7060457024077348984}
+  _appearSpeed: 1
+  _disappearTarget: {fileID: 2083799110385176443}
+  _disappearSpeed: 3
+  _testButton: 0
 --- !u!1 &8232326807781980853
 GameObject:
   m_ObjectHideFlags: 0

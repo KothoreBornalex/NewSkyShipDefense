@@ -424,8 +424,6 @@ public class UpgradeUIManager : MonoBehaviour
 
             _indicatorRectTrans.localPosition = tempVector;
 
-            Debug.Log("tet");
-
             yield return null;
         }
 
