@@ -20,6 +20,8 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField] private RectTransform _upgradesPack;
 
     private bool _isOpen;
+    private Coroutine _openCoroutine;
+    private Coroutine _closeCoroutine;
 
     [SerializeField] private float _slideSpeed;
 
@@ -60,9 +62,13 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField] private Image _spell1BackgroundImage;
     [SerializeField] private Image _spell2BackgroundImage;
     [SerializeField] private Image _spell3BackgroundImage;
-    [SerializeField] private GameObject _bordersSpell1;
-    [SerializeField] private GameObject _bordersSpell2;
-    [SerializeField] private GameObject _bordersSpell3;
+    [SerializeField] private RectTransform _spellIndicatorRectTrans;
+    [SerializeField] private float _spellIndicatorSpeed;
+    [SerializeField] private RectTransform _posLeftSpellRectTrans;
+    [SerializeField] private RectTransform _posMidSpellRectTrans;
+    [SerializeField] private RectTransform _posRightSpellRectTrans;
+    private Vector3 _targetSpellIndPos;
+    private Coroutine _spellIndicatorSlideCoroutine;
 
     [Header("Elements")]
     [SerializeField] private Image _elementTopBackgroundImage;
@@ -89,26 +95,24 @@ public class UpgradeUIManager : MonoBehaviour
                 _spell1BackgroundImage.color = _selectedColor;
                 _spell2BackgroundImage.color = _unselectedColor;
                 _spell3BackgroundImage.color = _unselectedColor;
-                _bordersSpell1.SetActive(true);
-                _bordersSpell2.SetActive(false);
-                _bordersSpell3.SetActive(false);
+                _targetSpellIndPos = _posLeftSpellRectTrans.localPosition;
                 break;
             case 2: // spell 2
                 _spell1BackgroundImage.color = _unselectedColor;
                 _spell2BackgroundImage.color = _selectedColor;
                 _spell3BackgroundImage.color = _unselectedColor;
-                _bordersSpell1.SetActive(false);
-                _bordersSpell2.SetActive(true);
-                _bordersSpell3.SetActive(false);
+                _targetSpellIndPos = _posMidSpellRectTrans.localPosition;
                 break;
             case 3: // spell 3
                 _spell1BackgroundImage.color = _unselectedColor;
                 _spell2BackgroundImage.color = _unselectedColor;
                 _spell3BackgroundImage.color = _selectedColor;
-                _bordersSpell1.SetActive(false);
-                _bordersSpell2.SetActive(false);
-                _bordersSpell3.SetActive(true);
+                _targetSpellIndPos = _posRightSpellRectTrans.localPosition;
                 break;
+        }
+        if(_spellIndicatorSlideCoroutine == null)
+        {
+            _spellIndicatorSlideCoroutine = StartCoroutine(SpellIndicatorSlideCoroutine());
         }
     }
     public void ChangeElementColorState(int index)
@@ -119,19 +123,19 @@ public class UpgradeUIManager : MonoBehaviour
                 _elementTopBackgroundImage.color = _selectedColor;
                 _elementMidBackgroundImage.color = _unselectedColor;
                 _elementBotBackgroundImage.color = _unselectedColor;
-                _targetIndPos = _posTopRectTrans.position;
+                _targetIndPos = _posTopRectTrans.localPosition;
                 break;
             case 2: // mid
                 _elementTopBackgroundImage.color = _unselectedColor;
                 _elementMidBackgroundImage.color = _selectedColor;
                 _elementBotBackgroundImage.color = _unselectedColor;
-                _targetIndPos = _posMidRectTrans.position;
+                _targetIndPos = _posMidRectTrans.localPosition;
                 break;
             case 3: // bot
                 _elementTopBackgroundImage.color = _unselectedColor;
                 _elementMidBackgroundImage.color = _unselectedColor;
                 _elementBotBackgroundImage.color = _selectedColor;
-                _targetIndPos = _posBotRectTrans.position;
+                _targetIndPos = _posBotRectTrans.localPosition;
                 break;
         }
         if (_indicatorSlideCoroutine == null)
@@ -145,7 +149,7 @@ public class UpgradeUIManager : MonoBehaviour
         if( _isOpen)
         {
             _isOpen = false;
-            StartCoroutine(CloseUpgradePanel());
+            _closeCoroutine = StartCoroutine(CloseUpgradePanel());
             if(_openCloseIcon != null)
             {
                 StartCoroutine(RotateCloseIcon());  // Rotate icon to arrow point top
@@ -158,7 +162,7 @@ public class UpgradeUIManager : MonoBehaviour
         else
         {
             _isOpen = true;
-            StartCoroutine(OpenUpgradePanel());
+            _openCoroutine = StartCoroutine(OpenUpgradePanel());
             if(_openCloseIcon != null)
             {
                 StartCoroutine(RotateOpenIcon());   // Rotate icon to arrow point down
@@ -331,6 +335,8 @@ public class UpgradeUIManager : MonoBehaviour
             yield return null;
         }
 
+        _openCoroutine = null;
+
         yield return null;
     }
     IEnumerator CloseUpgradePanel()
@@ -351,6 +357,8 @@ public class UpgradeUIManager : MonoBehaviour
 
             yield return null;
         }
+
+        _closeCoroutine = null;
 
         yield return null;
     }
@@ -402,25 +410,47 @@ public class UpgradeUIManager : MonoBehaviour
 
         yield return null;
     }
-
-    IEnumerator IndicatorSlideCoroutine()
+    IEnumerator IndicatorSlideCoroutine()   // element indicator slide
     {
-        while ((_indicatorRectTrans.position - _targetIndPos).magnitude > 0.2f)
+        while ((_indicatorRectTrans.localPosition - _targetIndPos).magnitude > 0.2f || _openCoroutine != null || _closeCoroutine != null)
         {
-            Vector3 tempVector = _indicatorRectTrans.position;
+            Vector3 tempVector = _indicatorRectTrans.localPosition;
 
-            float currentY = _indicatorRectTrans.position.y;
+            float currentY = _indicatorRectTrans.localPosition.y;
 
             currentY = Mathf.Lerp(currentY, _targetIndPos.y, Time.deltaTime * _indicatorSpeed);
 
             tempVector.y = currentY;
 
-            _indicatorRectTrans.position = tempVector;
+            _indicatorRectTrans.localPosition = tempVector;
+
+            Debug.Log("tet");
 
             yield return null;
         }
 
         _indicatorSlideCoroutine = null;
+
+        yield return null;
+    }
+    IEnumerator SpellIndicatorSlideCoroutine()  // Spell indicator slide
+    {
+        while ((_spellIndicatorRectTrans.localPosition - _targetSpellIndPos).magnitude > 0.2f)
+        {
+            Vector3 tempVector = _spellIndicatorRectTrans.localPosition;
+
+            float currentX = _spellIndicatorRectTrans.localPosition.x;
+
+            currentX = Mathf.Lerp(currentX, _targetSpellIndPos.x, Time.deltaTime * _spellIndicatorSpeed);
+
+            tempVector.x = currentX;
+
+            _spellIndicatorRectTrans.localPosition = tempVector;
+
+            yield return null;
+        }
+
+        _spellIndicatorSlideCoroutine = null;
 
         yield return null;
     }
