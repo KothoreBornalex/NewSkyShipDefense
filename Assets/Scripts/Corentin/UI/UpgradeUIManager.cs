@@ -54,14 +54,51 @@ public class UpgradeUIManager : MonoBehaviour
     private int _xpCheckValue;
     [SerializeField] private TextMeshProUGUI _xpText;
 
+    [Header("Spells")]
+    [SerializeField] private Color _selectedColor;
+    [SerializeField] private Color _unselectedColor;
+
+    [SerializeField] private Image _spell1BackgroundImage;
+    [SerializeField] private Image _spell2BackgroundImage;
+    [SerializeField] private Image _spell3BackgroundImage;
+    [SerializeField] private GameObject _bordersSpell1;
+    [SerializeField] private GameObject _bordersSpell2;
+    [SerializeField] private GameObject _bordersSpell3;
+
     // Properties
 
 
 
     // Methods
-    public void ChangeSpellColorState()
+    public void ChangeSpellColorState(int index)
     {
-
+        switch (index)
+        {
+            case 1:
+                _spell1BackgroundImage.color = _selectedColor;
+                _spell2BackgroundImage.color = _unselectedColor;
+                _spell3BackgroundImage.color = _unselectedColor;
+                _bordersSpell1.SetActive(true);
+                _bordersSpell2.SetActive(false);
+                _bordersSpell3.SetActive(false);
+                break;
+            case 2:
+                _spell1BackgroundImage.color = _unselectedColor;
+                _spell2BackgroundImage.color = _selectedColor;
+                _spell3BackgroundImage.color = _unselectedColor;
+                _bordersSpell1.SetActive(false);
+                _bordersSpell2.SetActive(true);
+                _bordersSpell3.SetActive(false);
+                break;
+            case 3:
+                _spell1BackgroundImage.color = _unselectedColor;
+                _spell2BackgroundImage.color = _unselectedColor;
+                _spell3BackgroundImage.color = _selectedColor;
+                _bordersSpell1.SetActive(false);
+                _bordersSpell2.SetActive(false);
+                _bordersSpell3.SetActive(true);
+                break;
+        }
     }
     public void UpgradeSkillsPanelSlide()   // Manage the position and slide of upgrades Panel
     {
@@ -230,6 +267,7 @@ public class UpgradeUIManager : MonoBehaviour
         UpdateStaminaSlider();
         UpdateWaveText();
         UpdateXpText();
+        ChangeSpellColorState(1);
     }
 
     // Update is called once per frame
