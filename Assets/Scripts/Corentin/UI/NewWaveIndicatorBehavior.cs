@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class NewWaveIndicatorBehavior : MonoBehaviour
 {
@@ -25,6 +26,14 @@ public class NewWaveIndicatorBehavior : MonoBehaviour
     private Coroutine _disappearCoroutine;
     [SerializeField] private RectTransform _disappearTarget;
     [SerializeField] private float _disappearSpeed;
+
+    [Header("DisappearParticles")]
+    [SerializeField] private UnityEvent _onDisappear;
+
+    [Header("TransitionTrail")]
+    [SerializeField] private RectTransform _trailHandler;
+    [SerializeField] private float _trailSpeed;
+    private Coroutine _trailRotateCoroutine;
 
     [Header("Tests")]
     [SerializeField] private bool _testButton;
@@ -69,7 +78,7 @@ public class NewWaveIndicatorBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
     // Update is called once per frame
     void Update()
@@ -100,6 +109,9 @@ public class NewWaveIndicatorBehavior : MonoBehaviour
             yield return null;
         }
 
+        _trailRotateCoroutine = null;
+        _trailRotateCoroutine = StartCoroutine(RotateTrailCoroutine());
+        
         yield return new WaitForSeconds(2f);
 
         _appearCoroutine = null;
@@ -137,9 +149,31 @@ public class NewWaveIndicatorBehavior : MonoBehaviour
             yield return null;
         }
 
+        _onDisappear.Invoke();
+
         ResetNewWave();
 
         _disappearCoroutine = null;
+
+        yield return null;
+    }
+
+    IEnumerator RotateTrailCoroutine()
+    {
+        Vector3 rotation = _trailHandler.rotation.eulerAngles;
+
+        rotation.z = 0;
+
+        _trailHandler.rotation = Quaternion.Euler(rotation);
+
+        while (rotation.z < 360f)
+        {
+            rotation.z = Mathf.Lerp(rotation.z, 362f, Time.deltaTime * _trailSpeed);
+
+            _trailHandler.rotation = Quaternion.Euler(rotation);
+
+            yield return null;
+        }
 
         yield return null;
     }
