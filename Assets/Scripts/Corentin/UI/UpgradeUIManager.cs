@@ -254,7 +254,7 @@ public class UpgradeUIManager : MonoBehaviour
 
     private void CheckXpValue()    // Check Xp value in gameManager(i suppose it will be in GM or in player)
     {
-        // If _xpCurrentValue != gmaManager.GetXpValue()
+        // If _xpCurrentValue != GameManager.instance.getWaveValue()
             // Change xpValue
     }
     private void UpdateXpText()
@@ -263,12 +263,29 @@ public class UpgradeUIManager : MonoBehaviour
     }
     private void CheckWaveValue()   // Check Wave value in gameManager(i suppose it will be in GM or in player)
     {
-        // If _waveCurrentValue != gmaManager.GetWaveValue()
+        // If _waveCurrentValue != GameManager.instance.getWaveValue()
             // Change waveValue
     }
     private void UpdateWaveText()
     {
         _waveText.text = _waveCurrentValue.ToString();
+    }
+
+    private void UpdateFireParticles()
+    {
+        var emission = _fireParticles.emission;
+        //emission.rateOverTime = 30f * GameManager.instance.getWaveValue() * 0.3f;
+        emission.rateOverTime = _waveCurrentValue * 30f * 0.3f;
+        emission.rateOverTime = Mathf.Clamp(emission.rateOverTime.constant, 30f, 200);
+
+        var radius = _fireParticles.shape;
+        //radius.radius = GameManager.instance.getWaveValue() / 20f;
+        radius.radius = _waveCurrentValue / 20f;
+        radius.radius = Mathf.Clamp(radius.radius, 0.01f, 0.24f);
+
+        var speed = _fireParticles.main.startSpeed;
+        speed = _waveCurrentValue * 0.2f;
+        speed = Mathf.Clamp(speed.constant, 1f, 5f);
     }
 
     private void OnValidate()
@@ -298,6 +315,8 @@ public class UpgradeUIManager : MonoBehaviour
             }
             _waveCheckValue = _waveCurrentValue;
             UpdateWaveText();
+
+            UpdateFireParticles();
         }
     }
     // Start is called before the first frame update
