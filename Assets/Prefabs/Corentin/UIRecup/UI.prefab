@@ -7217,6 +7217,7 @@ MonoBehaviour:
   _staminaSlideSpeed: 2
   _waveCurrentValue: 0
   _waveText: {fileID: 3288362838768680311}
+  _fireParticles: {fileID: 877783270159014499}
   _xpCurrentValue: 0
   _xpText: {fileID: 3525286084187100143}
   _selectedColor: {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
@@ -11204,6 +11205,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6367a5098dcf54469bac790199c30cf, type: 3}
+--- !u!198 &877783270159014499 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1789866778570683773, guid: d6367a5098dcf54469bac790199c30cf, type: 3}
+  m_PrefabInstance: {fileID: 1511064747919912734}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5276533229414119579 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6756070580373706629, guid: d6367a5098dcf54469bac790199c30cf, type: 3}

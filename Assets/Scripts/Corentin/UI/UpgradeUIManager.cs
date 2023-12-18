@@ -51,6 +51,9 @@ public class UpgradeUIManager : MonoBehaviour
     private int _waveCheckValue;
     [SerializeField] private TextMeshProUGUI _waveText;
 
+    [Header("WaveFireParticles")]
+    [SerializeField] private ParticleSystem _fireParticles;
+
     [Header("XP")]
     [SerializeField] private int _xpCurrentValue;
     private int _xpCheckValue;
