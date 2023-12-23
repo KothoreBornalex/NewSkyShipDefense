@@ -23,6 +23,8 @@ public class playerAttack : MonoBehaviour
     [SerializeField] private PlayerAttacksData _playerAttacksData;
 
 
+    private float minPressedTime = 0.2f;
+    private float currentPressedTime;
 
     // Properties
     public int Spell1Level { get => _spell1Level; set => _spell1Level = value; }
@@ -61,7 +63,7 @@ public class playerAttack : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
+        if(Physics.Raycast(ray.origin, ray.direction, out hit, 300.0f))
         {
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.yellow);
 
@@ -134,9 +136,27 @@ public class playerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Stationary)
+            {
+                currentPressedTime += Time.deltaTime;
+            }
+
+        }
+
+        if(currentPressedTime >= minPressedTime)
         {
             Attack();
+            currentPressedTime = 0;
         }
+
+
+        /*if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Attack();
+        }*/
     }
 }

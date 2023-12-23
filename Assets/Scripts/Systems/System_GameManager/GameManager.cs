@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 100;
+        Application.targetFrameRate = 45;
 
         if (GameManager.instance == null)
         {
@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState _currentGameState;
     [SerializeField] private ObjectifStats[] _objectifs;
 
+    public GameState CurrentGameState { get => _currentGameState; set => _currentGameState = value; }
     public ObjectifStats[] Objectifs { get => _objectifs; set => _objectifs = value; }
 
     private bool _preWaveHasStarted;
