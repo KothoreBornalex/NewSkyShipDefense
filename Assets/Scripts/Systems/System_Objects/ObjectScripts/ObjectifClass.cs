@@ -9,13 +9,14 @@ public class ObjectifClass : MonoBehaviour, IObjects
     [Header("Base Object Variables")]
     [SerializeField] private ObjectStates ObjectState;
 
+    [SerializeField] private GameObject _effectsParentObject;
     [SerializeField] private List<EffectEmission> Destroyed_effectEmissions = new List<EffectEmission>();
     [SerializeField] private List<EffectEmission> Destroyed_secondaryEffectEmissions = new List<EffectEmission>();
 
     public void Destroyed()
     {
         //Instantiating all the destroyed effects.
-        foreach(EffectEmission effect in Destroyed_effectEmissions)
+        /*foreach(EffectEmission effect in Destroyed_effectEmissions)
         {
             Instantiate<GameObject>(effect.Prefab_Effect, effect.SpawnPoint_Effect);
         }
@@ -23,7 +24,9 @@ public class ObjectifClass : MonoBehaviour, IObjects
         foreach (EffectEmission effect in Destroyed_secondaryEffectEmissions)
         {
             Instantiate<GameObject>(effect.Prefab_Effect, effect.SpawnPoint_Effect);
-        }
+        }*/
+
+        _effectsParentObject.SetActive(true);
 
     }
 

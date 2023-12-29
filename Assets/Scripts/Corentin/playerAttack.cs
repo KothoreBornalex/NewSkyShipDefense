@@ -136,6 +136,8 @@ public class playerAttack : MonoBehaviour
 
     void Update()
     {
+
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -146,8 +148,13 @@ public class playerAttack : MonoBehaviour
             }
 
         }
+        else if(currentPressedTime != 0)
+        {
+            currentPressedTime = 0;
+        }
 
-        if(currentPressedTime >= minPressedTime)
+
+        if (currentPressedTime >= minPressedTime)
         {
             Attack();
             currentPressedTime = 0;

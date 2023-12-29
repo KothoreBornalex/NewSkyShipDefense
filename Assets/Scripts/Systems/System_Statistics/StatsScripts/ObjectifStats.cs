@@ -17,6 +17,7 @@ public class ObjectifStats : MonoBehaviour, IStatistics
 
     [Header("Objectif UI")]
     [SerializeField] private Color _hitColor;
+    [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Slider _lifeSlider;
     [SerializeField] private Image _sliderBackGround;
 
@@ -48,6 +49,11 @@ public class ObjectifStats : MonoBehaviour, IStatistics
         {
             _lifeSlider.value = Mathf.Lerp(_lifeSlider.value, _objectifHealth._statCurrentValue, Time.deltaTime * 9.0f);
             _sliderBackGround.color = Vector4.Lerp(_sliderBackGround.color, Color.white, Time.deltaTime * 6.0f);
+        }
+
+        if(_objectifHealth._statCurrentValue == 0 && _canvasGroup.alpha > 0.16f)
+        {
+            _canvasGroup.alpha = Mathf.Lerp(_canvasGroup.alpha, 0.15f, Time.deltaTime * 0.5f);
         }
     }
 
