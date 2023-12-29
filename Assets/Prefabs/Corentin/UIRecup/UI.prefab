@@ -17371,6 +17371,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8570950a65b89564e8e510c3ac4e1cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _upgrades: {fileID: 6996017749575058777}
+  _indexPages: 0
+  _totalPages: 3
+  _speedPages: 2
+  _nextPageButton: {fileID: 0}
+  _previousPageButton: {fileID: 0}
+  testRight: 0
+  testLeft: 0
 --- !u!1 &8427259044778110433
 GameObject:
   m_ObjectHideFlags: 0
